@@ -5,20 +5,21 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:gravity="center"
-    android:background="#f0f0f0">
+    android:background="@drawable/background_gradient"> <!-- ou @drawable/background_pattern -->
 
     <!-- Display da Calculadora -->
     <TextView
         android:id="@+id/tvDisplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/display_default"
         android:textSize="32sp"
         android:gravity="end"
         android:padding="16dp"
         android:background="#ffffff"
         android:elevation="2dp"
-        android:layout_marginBottom="16dp"/>
+        android:textColor="#000000" <!-- Cor do texto para contraste -->
+    android:layout_marginBottom="16dp"/>
 
     <!-- Botões da Calculadora -->
     <GridLayout
@@ -30,67 +31,84 @@
 
         <!-- Primeira Linha -->
         <Button
-            android:text="7"
+            android:id="@+id/button7"
+            android:text="@string/button7"
             style="@style/CalculatorButtonStyle"/>
         <Button
-            android:text="8"
+            android:id="@+id/button8"
+            android:text="@string/button8"
             style="@style/CalculatorButtonStyle"/>
         <Button
-            android:text="9"
+            android:id="@+id/button9"
+            android:text="@string/button9"
             style="@style/CalculatorButtonStyle"/>
         <Button
-            android:text="/"
+            android:id="@+id/buttonDivide"
+            android:text="@string/buttonDivide"
             style="@style/CalculatorButtonStyle"/>
 
         <!-- Segunda Linha -->
         <Button
-            android:text="4"
+            android:id="@+id/button4"
+            android:text="@string/button4"
             style="@style/CalculatorButtonStyle"/>
         <Button
-            android:text="5"
+            android:id="@+id/button5"
+            android:text="@string/button5"
             style="@style/CalculatorButtonStyle"/>
         <Button
-            android:text="6"
+            android:id="@+id/button6"
+            android:text="@string/button6"
             style="@style/CalculatorButtonStyle"/>
         <Button
-            android:text="*"
+            android:id="@+id/buttonMultiply"
+            android:text="@string/buttonMultiply"
             style="@style/CalculatorButtonStyle"/>
 
         <!-- Terceira Linha -->
         <Button
-            android:text="1"
+            android:id="@+id/button1"
+            android:text="@string/button1"
             style="@style/CalculatorButtonStyle"/>
         <Button
-            android:text="2"
+            android:id="@+id/button2"
+            android:text="@string/button2"
             style="@style/CalculatorButtonStyle"/>
         <Button
-            android:text="3"
+            android:id="@+id/button3"
+            android:text="@string/button3"
             style="@style/CalculatorButtonStyle"/>
         <Button
-            android:text="-"
+            android:id="@+id/buttonSubtract"
+            android:text="@string/buttonSubtract"
             style="@style/CalculatorButtonStyle"/>
 
         <!-- Quarta Linha -->
         <Button
-            android:text="0"
+            android:id="@+id/button0"
+            android:text="@string/button0"
             style="@style/CalculatorButtonStyle"/>
         <Button
-            android:text="."
+            android:id="@+id/buttonDot"
+            android:text="@string/buttonDot"
             style="@style/CalculatorButtonStyle"/>
         <Button
-            android:text="="
+            android:id="@+id/buttonEqual"
+            android:text="@string/buttonEqual"
             style="@style/CalculatorButtonStyle"/>
         <Button
-            android:text="+"
+            android:id="@+id/buttonAdd"
+            android:text="@string/buttonAdd"
             style="@style/CalculatorButtonStyle"/>
 
         <!-- Quinta Linha (Opcional: Limpar) -->
         <Button
-            android:text="C"
+            android:id="@+id/buttonClear"
+            android:text="@string/buttonClear"
             style="@style/CalculatorButtonStyle"
             android:layout_columnSpan="4"
-            android:background="#FFCDD2"
-            android:textColor="#FFFFFF"/>
+            android:background="#D32F2F" <!-- Cor de fundo vermelho escuro -->
+        android:textColor="#FFFFFF"/> <!-- Texto branco -->
 
     </GridLayout>
 </LinearLayout>
