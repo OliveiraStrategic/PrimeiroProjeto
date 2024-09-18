@@ -1,19 +1,96 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="#f0f0f0">
 
+    <!-- Display da Calculadora -->
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tvDisplay"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="0"
+        android:textSize="32sp"
+        android:gravity="end"
+        android:padding="16dp"
+        android:background="#ffffff"
+        android:elevation="2dp"
+        android:layout_marginBottom="16dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Botões da Calculadora -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rowCount="5"
+        android:columnCount="4"
+        android:layout_gravity="center">
+
+        <!-- Primeira Linha -->
+        <Button
+            android:text="7"
+            style="@style/CalculatorButtonStyle"/>
+        <Button
+            android:text="8"
+            style="@style/CalculatorButtonStyle"/>
+        <Button
+            android:text="9"
+            style="@style/CalculatorButtonStyle"/>
+        <Button
+            android:text="/"
+            style="@style/CalculatorButtonStyle"/>
+
+        <!-- Segunda Linha -->
+        <Button
+            android:text="4"
+            style="@style/CalculatorButtonStyle"/>
+        <Button
+            android:text="5"
+            style="@style/CalculatorButtonStyle"/>
+        <Button
+            android:text="6"
+            style="@style/CalculatorButtonStyle"/>
+        <Button
+            android:text="*"
+            style="@style/CalculatorButtonStyle"/>
+
+        <!-- Terceira Linha -->
+        <Button
+            android:text="1"
+            style="@style/CalculatorButtonStyle"/>
+        <Button
+            android:text="2"
+            style="@style/CalculatorButtonStyle"/>
+        <Button
+            android:text="3"
+            style="@style/CalculatorButtonStyle"/>
+        <Button
+            android:text="-"
+            style="@style/CalculatorButtonStyle"/>
+
+        <!-- Quarta Linha -->
+        <Button
+            android:text="0"
+            style="@style/CalculatorButtonStyle"/>
+        <Button
+            android:text="."
+            style="@style/CalculatorButtonStyle"/>
+        <Button
+            android:text="="
+            style="@style/CalculatorButtonStyle"/>
+        <Button
+            android:text="+"
+            style="@style/CalculatorButtonStyle"/>
+
+        <!-- Quinta Linha (Opcional: Limpar) -->
+        <Button
+            android:text="C"
+            style="@style/CalculatorButtonStyle"
+            android:layout_columnSpan="4"
+            android:background="#FFCDD2"
+            android:textColor="#FFFFFF"/>
+
+    </GridLayout>
+</LinearLayout>
