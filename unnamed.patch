@@ -1,0 +1,285 @@
+Index: .idea/deploymentTargetSelector.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetSelector.xml b/.idea/deploymentTargetSelector.xml
+new file mode 100644
+--- /dev/null	(revision 488050667b585133e4d40b0b7271e291863104e3)
++++ b/.idea/deploymentTargetSelector.xml	(revision 488050667b585133e4d40b0b7271e291863104e3)
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="deploymentTargetSelector">
++    <selectionStates>
++      <SelectionState runConfigName="app">
++        <option name="selectionMode" value="DROPDOWN" />
++      </SelectionState>
++    </selectionStates>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(revision 488050667b585133e4d40b0b7271e291863104e3)
++++ b/.idea/vcs.xml	(revision 488050667b585133e4d40b0b7271e291863104e3)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/java/com/example/calculadora/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/calculadora/MainActivity.kt b/app/src/main/java/com/example/calculadora/MainActivity.kt
+--- a/app/src/main/java/com/example/calculadora/MainActivity.kt	(revision 63ca316b356a24863812c6287b3741a5c2300be4)
++++ b/app/src/main/java/com/example/calculadora/MainActivity.kt	(revision 488050667b585133e4d40b0b7271e291863104e3)
+@@ -1,20 +1,85 @@
+ package com.example.calculadora
+ 
+ import android.os.Bundle
+-import androidx.activity.enableEdgeToEdge
++import android.widget.Button
++import android.widget.TextView
+ import androidx.appcompat.app.AppCompatActivity
+-import androidx.core.view.ViewCompat
+-import androidx.core.view.WindowInsetsCompat
+ 
+ class MainActivity : AppCompatActivity() {
++
++    private lateinit var display: TextView
++    private var currentNumber: String = ""
++    private var operator: String? = null
++    private var firstNumber: Double? = null
++
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-        enableEdgeToEdge()
+         setContentView(R.layout.activity_main)
+-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+-            insets
++
++        display = findViewById(R.id.tvDisplay)
++
++        // Set up listeners for each button
++        val buttonIds = listOf(
++            R.id.button0, R.id.button1, R.id.button2, R.id.button3,
++            R.id.button4, R.id.button5, R.id.button6, R.id.button7,
++            R.id.button8, R.id.button9, R.id.buttonDot, R.id.buttonAdd,
++            R.id.buttonSubtract, R.id.buttonMultiply, R.id.buttonDivide,
++            R.id.buttonEqual, R.id.buttonClear
++        )
++
++        for (id in buttonIds) {
++            findViewById<Button>(id).setOnClickListener { onButtonClick(it as Button) }
+         }
+     }
+-}
+\ No newline at end of file
++
++    private fun onButtonClick(button: Button) {
++        when (val text = button.text.toString()) {
++            in "0".."9", "." -> onNumberClick(text)
++            in "+", "-", "*", "/" -> onOperatorClick(text)
++            "=" -> onEqualClick()
++            "C" -> onClearClick()
++        }
++    }
++
++    private fun onNumberClick(number: String) {
++        currentNumber += number
++        updateDisplay(currentNumber)
++    }
++
++    private fun onOperatorClick(op: String) {
++        if (currentNumber.isNotEmpty()) {
++            firstNumber = currentNumber.toDouble()
++            currentNumber = ""
++            operator = op
++            updateDisplay("")
++        }
++    }
++
++    private fun onEqualClick() {
++        if (currentNumber.isNotEmpty() && firstNumber != null && operator != null) {
++            val secondNumber = currentNumber.toDouble()
++            val result = when (operator) {
++                "+" -> firstNumber!! + secondNumber
++                "-" -> firstNumber!! - secondNumber
++                "*" -> firstNumber!! * secondNumber
++                "/" -> firstNumber!! / secondNumber
++                else -> 0.0
++            }
++            updateDisplay(result.toString())
++            currentNumber = result.toString()
++            operator = null
++            firstNumber = null
++        }
++    }
++
++    private fun onClearClick() {
++        currentNumber = ""
++        operator = null
++        firstNumber = null
++        updateDisplay("0")
++    }
++
++    private fun updateDisplay(text: String) {
++        display.text = text
++    }
++}
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision 63ca316b356a24863812c6287b3741a5c2300be4)
++++ b/app/src/main/res/layout/activity_main.xml	(revision 488050667b585133e4d40b0b7271e291863104e3)
+@@ -1,19 +1,96 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
+-    android:id="@+id/main"
++<LinearLayout
++    xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".MainActivity">
++    android:orientation="vertical"
++    android:padding="16dp"
++    android:gravity="center"
++    android:background="#f0f0f0">
+ 
++    <!-- Display da Calculadora -->
+     <TextView
+-        android:layout_width="wrap_content"
++        android:id="@+id/tvDisplay"
++        android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:text="Hello World!"
+-        app:layout_constraintBottom_toBottomOf="parent"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent" />
++        android:text="0"
++        android:textSize="32sp"
++        android:gravity="end"
++        android:padding="16dp"
++        android:background="#ffffff"
++        android:elevation="2dp"
++        android:layout_marginBottom="16dp"/>
++
++    <!-- Botões da Calculadora -->
++    <GridLayout
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:rowCount="5"
++        android:columnCount="4"
++        android:layout_gravity="center">
++
++        <!-- Primeira Linha -->
++        <Button
++            android:text="7"
++            style="@style/CalculatorButtonStyle"/>
++        <Button
++            android:text="8"
++            style="@style/CalculatorButtonStyle"/>
++        <Button
++            android:text="9"
++            style="@style/CalculatorButtonStyle"/>
++        <Button
++            android:text="/"
++            style="@style/CalculatorButtonStyle"/>
++
++        <!-- Segunda Linha -->
++        <Button
++            android:text="4"
++            style="@style/CalculatorButtonStyle"/>
++        <Button
++            android:text="5"
++            style="@style/CalculatorButtonStyle"/>
++        <Button
++            android:text="6"
++            style="@style/CalculatorButtonStyle"/>
++        <Button
++            android:text="*"
++            style="@style/CalculatorButtonStyle"/>
++
++        <!-- Terceira Linha -->
++        <Button
++            android:text="1"
++            style="@style/CalculatorButtonStyle"/>
++        <Button
++            android:text="2"
++            style="@style/CalculatorButtonStyle"/>
++        <Button
++            android:text="3"
++            style="@style/CalculatorButtonStyle"/>
++        <Button
++            android:text="-"
++            style="@style/CalculatorButtonStyle"/>
+ 
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
++        <!-- Quarta Linha -->
++        <Button
++            android:text="0"
++            style="@style/CalculatorButtonStyle"/>
++        <Button
++            android:text="."
++            style="@style/CalculatorButtonStyle"/>
++        <Button
++            android:text="="
++            style="@style/CalculatorButtonStyle"/>
++        <Button
++            android:text="+"
++            style="@style/CalculatorButtonStyle"/>
++
++        <!-- Quinta Linha (Opcional: Limpar) -->
++        <Button
++            android:text="C"
++            style="@style/CalculatorButtonStyle"
++            android:layout_columnSpan="4"
++            android:background="#FFCDD2"
++            android:textColor="#FFFFFF"/>
++
++    </GridLayout>
++</LinearLayout>
+Index: app/src/main/res/values/styles.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/styles.xml b/app/src/main/res/values/styles.xml
+new file mode 100644
+--- /dev/null	(revision 488050667b585133e4d40b0b7271e291863104e3)
++++ b/app/src/main/res/values/styles.xml	(revision 488050667b585133e4d40b0b7271e291863104e3)
+@@ -0,0 +1,14 @@
++<resources>
++    <!-- Estilo dos Botões da Calculadora -->
++    <style name="CalculatorButtonStyle">
++        <item name="android:layout_width">0dp</item>
++        <item name="android:layout_height">wrap_content</item>
++        <item name="android:layout_rowWeight">1</item>
++        <item name="android:layout_columnWeight">1</item>
++        <item name="android:padding">16dp</item>
++        <item name="android:background">#E0E0E0</item>
++        <item name="android:textColor">#000000</item>
++        <item name="android:textSize">24sp</item>
++        <item name="android:layout_margin">4dp</item>
++    </style>
++</resources>
